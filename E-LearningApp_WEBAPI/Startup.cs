@@ -7,6 +7,8 @@ using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using DataLibrary.Models;
 using DataLibrary.DataContext;
+using Microsoft.AspNetCore.Identity;
+
 namespace E_LearningApp_WEBAPI
 {
     public class Startup
@@ -27,6 +29,13 @@ namespace E_LearningApp_WEBAPI
             options.UseSqlServer(Configuration.GetConnectionString("AppConnectionString")));
             services.AddDefaultIdentity<User>()
               .AddEntityFrameworkStores<ELearningContext>();
+            services.Configure<IdentityOptions>(options => {
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase=false;
+                });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "E_LearningApp_WEBAPI", Version = "v1" });
